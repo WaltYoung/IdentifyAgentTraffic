@@ -17,4 +17,4 @@ def read_top_domestic(filename):
 
 # 查询函数
 def query_domain_by_ip(ip, data_dict):
-    return data_dict.get(ip, None)
+    return data_dict.get(ip, None) # 如果键不存在于字典中，将返回None

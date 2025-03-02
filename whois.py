@@ -11,6 +11,8 @@ def get_whoenum_data(domain):
     try:
         result = subprocess.run(['whoenum', '-d', domain], capture_output=True, text=True, check=True)
         whoenum_output = result.stdout
+        if whoenum_output == '':
+            return None
         try:
             data = json.loads(whoenum_output)
             return data
@@ -33,6 +35,8 @@ def get_name_servers(whoenum_data):
 
 
 def get_registrar(whoenum_data):
+    if whoenum_data is None:
+        return None
     if whoenum_data and 'registrar' in whoenum_data:
         # 提取 registrar
         registrar = whoenum_data['registrar']
@@ -66,6 +70,8 @@ def append_known_registrar(known_registrar, domain, registrar):
 
 
 def search_known_registrar(known_registrar, target_domain):
+    if target_domain is None:
+        return None
     for domain, registrar in known_registrar.items():
         if domain == target_domain:
             return registrar
